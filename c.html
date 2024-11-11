@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books by Author</title>
+</head>
+<body>
+    <h1>Get Books by Author</h1>
+    <input type="text" id="authorInput" placeholder="Enter Author Name">
+    <button id="getBooksByAuthorBtn">Get Books</button>
+    <ul id="authorBooksList"></ul>
+
+    <script>
+        document.getElementById('getBooksByAuthorBtn').addEventListener('click', () => {
+            const author = document.getElementById('authorInput').value;
+            fetch(`/books/author/${author}`)
+                .then(response => response.json())
+                .then(data => {
+                    const authorBooksList = document.getElementById('authorBooksList');
+                    authorBooksList.innerHTML = '';
+                    data.forEach(book => {
+                        const li = document.createElement('li');
+                        li.textContent = `${book.title}`;
+                        authorBooksList.appendChild(li);
+                    });
+                })
+                .catch(error => alert('No books found by this author.'));
+        });
+    </script>
+</body>
+</html>

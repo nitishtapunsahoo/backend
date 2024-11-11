@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Book by ISBN</title>
+</head>
+<body>
+    <h1>Get Book by ISBN</h1>
+    <input type="text" id="isbnInput" placeholder="Enter ISBN">
+    <button id="getBookBtn">Get Book</button>
+    <div id="bookDetails"></div>
+
+    <script>
+        document.getElementById('getBookBtn').addEventListener('click', () => {
+            const isbn = document.getElementById('isbnInput').value;
+            fetch(`/book/${isbn}`)
+                .then(response => response.json())
+                .then(data => {
+                    const bookDetails = document.getElementById('bookDetails');
+                    bookDetails.innerHTML = `Title: ${data.title} <br> Author: ${data.author} <br> Review: ${data.review}`;
+                })
+                .catch(error => alert('Book not found.'));
+        });
+    </script>
+</body>
+</html>

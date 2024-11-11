@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register New User</title>
+</head>
+<body>
+    <h1>Register New User</h1>
+    <input type="text" id="newUsername" placeholder="Username">
+    <input type="password" id="newPassword" placeholder="Password">
+    <button id="registerBtn">Register</button>
+    <div id="registerMessage"></div>
+
+    <script>
+        document.getElementById('registerBtn').addEventListener('click', () => {
+            const username = document.getElementById('newUsername').value;
+            const password = document.getElementById('newPassword').value;
+            fetch('/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('registerMessage').textContent = data.message;
+            });
+        });
+    </script>
+</body>
+</html>

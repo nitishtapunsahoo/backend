@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books by Title</title>
+</head>
+<body>
+    <h1>Get Books by Title</h1>
+    <input type="text" id="titleInput" placeholder="Enter Book Title">
+    <button id="getBooksByTitleBtn">Get Books</button>
+    <ul id="titleBooksList"></ul>
+
+    <script>
+        document.getElementById('getBooksByTitleBtn').addEventListener('click', () => {
+            const title = document.getElementById('titleInput').value;
+            fetch(`/books/title/${title}`)
+                .then(response => response.json())
+                .then(data => {
+                    const titleBooksList = document.getElementById('titleBooksList');
+                    titleBooksList.innerHTML = '';
+                    data.forEach(book => {
+                        const li = document.createElement('li');
+                        li.textContent = `${book.title} by ${book.author}`;
+                        titleBooksList.appendChild(li);
+                    });
+                })
+                .catch(error => alert('No books found with this title.'));
+        });
+    </script>
+</body>
+</html>
